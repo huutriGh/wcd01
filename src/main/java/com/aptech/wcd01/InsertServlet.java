@@ -1,7 +1,10 @@
 package com.aptech.wcd01;
 
 import com.aptech.wcd01.models.Employee;
-import com.aptech.wcd01.models.EmployeeList;
+import com.aptech.wcd01.services.EmloyeeServiceImpl;
+import com.aptech.wcd01.services.EmployeeJDBCServiceImpl;
+import com.aptech.wcd01.services.EmployeeJDBCService;
+import com.aptech.wcd01.services.EmployeeService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,23 +26,23 @@ public class InsertServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            EmployeeList employeeList = new EmployeeList();
-            Employee employee = new Employee();
+             EmployeeService employeeService = new EmloyeeServiceImpl();
+            //EmployeeJDBCService employeeService = new EmployeeJDBCServiceImpl();
+;            Employee employee = new Employee();
             employee.setId(req.getParameter("id"));
             employee.setName(req.getParameter("name"));
             employee.setAddress(req.getParameter("address"));
-            employee.setAge(Integer.valueOf(req.getParameter("age")));
+            employee.setAge(Integer.parseInt(req.getParameter("age")));
 
 
-            if (!employeeList.insertEmp(employee)) {
+            if (!employeeService.addEmployee(employee)) {
 
                 req.setAttribute("error", "Employee is exist");
                 req.getServletContext()
                         .getRequestDispatcher("/WEB-INF/failed.jsp").forward(req, resp);
             } else {
 
-                req.setAttribute("employeeList",employeeList.getEmployeeList());
-                req.getServletContext().setAttribute("employeeList", employeeList.getEmployeeList() );
+                req.setAttribute("employeeList",employeeService.getAllEmployee());
                 req.getServletContext()
                         .getRequestDispatcher("/WEB-INF/success.jsp").forward(req, resp);
             }

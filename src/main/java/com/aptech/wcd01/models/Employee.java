@@ -1,11 +1,30 @@
 package com.aptech.wcd01.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+
 import java.util.Objects;
 
+
+@Entity
+@Table(name = "Employee")
 public class Employee {
+
+    @Id
+    @Column(name = "Id")
     private  String id;
+
+    @Column(name = "Emp_Name")
     private String name;
+
+    @Column(name = "Address")
     private  String address;
+
+    @Column(name = "Age")
+    @Min(value = 16,message = "FDSFDSLFKJDSLKFJDLKSFSD")
     private int age;
     public String getId() {
         return id;
