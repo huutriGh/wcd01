@@ -4,7 +4,7 @@ import com.aptech.wcd01.models.Employee;
 
 import java.util.List;
 
-public interface EmployeeService {
+public interface EmployeeJPAService {
 
     public boolean addEmployee(Employee employee);
     public boolean updateEmployee(Employee employee);

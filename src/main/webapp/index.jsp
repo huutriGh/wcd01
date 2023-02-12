@@ -7,9 +7,9 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1><%= "Hello Employee" %>
 </h1>
 <br/>
-<a href="<c:url value="/insert"/> ">Hello Servlet</a>
+<a href="<c:url value="/insert"/> ">Insert Employee</a>
 </body>
 </html>

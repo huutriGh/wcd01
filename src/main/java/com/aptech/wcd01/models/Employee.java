@@ -6,12 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "Employee")
-public class Employee {
+public class Employee implements Serializable {
 
     @Id
     @Column(name = "Id")
@@ -24,7 +25,7 @@ public class Employee {
     private  String address;
 
     @Column(name = "Age")
-    @Min(value = 16,message = "FDSFDSLFKJDSLKFJDLKSFSD")
+    @Min(value = 16,message = "Age muse be greater than 15")
     private int age;
     public String getId() {
         return id;

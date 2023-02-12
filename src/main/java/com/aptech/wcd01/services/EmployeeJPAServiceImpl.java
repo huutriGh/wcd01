@@ -1,35 +1,48 @@
 package com.aptech.wcd01.services;
 
 import com.aptech.wcd01.models.Employee;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.UserTransaction;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
-import java.sql.SQLException;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.util.List;
 import java.util.Set;
 
-public class EmloyeeServiceImpl implements EmployeeService {
+
+@ApplicationScoped
+public class EmployeeJPAServiceImpl implements EmployeeJPAService {
 
 
-    private final EntityManager entityManager;
+    @PersistenceContext(unitName = "employee")
+    private  EntityManager entityManager;
+    private  UserTransaction userTransaction;
 
-    public EmloyeeServiceImpl() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        this.entityManager = entityManagerFactory.createEntityManager();
+    public EmployeeJPAServiceImpl() {
+
+        try {
+            userTransaction = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
+        } catch (NamingException e) {
+
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean addEmployee(Employee employee) {
         try {
-            String errMsg = validateEntity(employee);
-            entityManager.getTransaction().begin();
+
+            userTransaction.begin();
+            entityManager.joinTransaction();
             entityManager.persist(employee);
-            entityManager.getTransaction().commit();
+            userTransaction.commit();
+
             return true;
         } catch (Exception exception) {
             return false;
@@ -40,24 +53,30 @@ public class EmloyeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean updateEmployee(Employee employee) {
-        entityManager.getTransaction().begin();
-//        Employee emp = entityManager.find(Employee.class, employee.getId());
-//        emp.setAge(employee.getAge());
-//        emp.setName(employee.getName());
-//        emp.setAddress(employee.getAddress());
-        entityManager.merge(employee);
-        entityManager.getTransaction().commit();
-        return true;
+
+        try {
+            userTransaction.begin();
+            entityManager.joinTransaction();
+            entityManager.merge(employee);
+            userTransaction.commit();
+            return true;
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return  false;
+        }
+
     }
 
     @Override
     public boolean deleteEmployee(String id) {
         try {
-            entityManager.getTransaction().begin();
+            userTransaction.begin();
+            entityManager.joinTransaction();
             entityManager.remove(getEmployeeById(id));
-            entityManager.getTransaction().commit();
+            userTransaction.commit();
             return true;
         } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         }
 
@@ -72,6 +91,12 @@ public class EmloyeeServiceImpl implements EmployeeService {
     public Employee getEmployeeById(String id) {
         return entityManager.find(Employee.class, id);
     }
+
+    /**
+     * Funtion get all violation when valid entity
+     * @param employee
+     * @return String of message invalid.
+     */
 
     private String validateEntity(Employee employee) {
 
