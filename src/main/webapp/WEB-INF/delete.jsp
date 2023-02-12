@@ -27,7 +27,7 @@
         <input name="age" type="number" value="${emp.age}" placeholder="Age">
     </p>
     <p>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Delete">
     </p>
 </form>
 </body>

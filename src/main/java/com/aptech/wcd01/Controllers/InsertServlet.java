@@ -1,8 +1,7 @@
 package com.aptech.wcd01.Controllers;
 
 import com.aptech.wcd01.models.Employee;
-import com.aptech.wcd01.services.EmployeeJPAServiceImpl;
-import com.aptech.wcd01.services.EmployeeJPAService;
+import com.aptech.wcd01.services.EmployeeJDBCService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,7 +16,7 @@ public class InsertServlet extends HttpServlet {
 
 
     @Inject
-    private EmployeeJPAService employeeJPAService;
+    private EmployeeJDBCService employeeService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,14 +38,14 @@ public class InsertServlet extends HttpServlet {
 
 
 
-            if (!employeeJPAService.addEmployee(employee)) {
+            if (!employeeService.addEmployee(employee)) {
 
                 req.setAttribute("error", "Insert employee error");
                 req.getServletContext()
                         .getRequestDispatcher("/WEB-INF/failed.jsp").forward(req, resp);
 
             } else {
-                resp.sendRedirect(req.getContextPath() + "/list");
+                resp.sendRedirect("list");
             }
 
         } catch (Exception ex) {

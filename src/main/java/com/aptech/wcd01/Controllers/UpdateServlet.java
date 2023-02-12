@@ -15,12 +15,12 @@ import java.io.IOException;
 public class UpdateServlet extends HttpServlet {
 
     @Inject
-    EmployeeJPAService employeeJPAService;
+    EmployeeJPAService employeeService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        req.setAttribute("emp", employeeJPAService.getEmployeeById(id));
+        req.setAttribute("emp", employeeService.getEmployeeById(id));
         req.getRequestDispatcher("/WEB-INF/update.jsp").forward(req, resp);
 
     }
@@ -33,7 +33,7 @@ public class UpdateServlet extends HttpServlet {
         employee.setAddress(req.getParameter("address"));
         employee.setAge(Integer.parseInt(req.getParameter("age")));
 
-        if (!employeeJPAService.updateEmployee(employee)) {
+        if (!employeeService.updateEmployee(employee)) {
 
             req.setAttribute("error", "Update employee fail !!!");
             req.getServletContext()

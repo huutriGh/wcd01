@@ -23,8 +23,8 @@
         <th>Name</th>
         <th>Address</th>
         <th>Age</th>
-        <th></th>
-        <th></th>
+        <th colspan="2">Action</th>
+
     </tr>
     </thead>
     <tbody>

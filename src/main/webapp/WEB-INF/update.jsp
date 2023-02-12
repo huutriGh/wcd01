@@ -6,7 +6,7 @@
   Time: 8:39 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="" %>
+
 <html>
 <head>
     <title>Update Employee</title>
@@ -27,7 +27,7 @@
         <input name="age" type="number" value="${emp.age}" placeholder="Age">
     </p>
     <p>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Update">
     </p>
 </form>
 </body>

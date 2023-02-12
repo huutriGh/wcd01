@@ -1,7 +1,6 @@
 package com.aptech.wcd01.Controllers;
 
-import com.aptech.wcd01.models.Employee;
-import com.aptech.wcd01.services.EmployeeJPAService;
+import com.aptech.wcd01.services.EmployeeJDBCService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,12 +13,12 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/delete")
 public class DeleteSevlet extends HttpServlet {
     @Inject
-    EmployeeJPAService employeeJPAService;
+    EmployeeJDBCService employeeService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        req.setAttribute("emp", employeeJPAService.getEmployeeById(id));
+        req.setAttribute("emp", employeeService.getEmployeeById(id));
         req.getRequestDispatcher("/WEB-INF/delete.jsp").forward(req, resp);
 
     }
@@ -27,7 +26,7 @@ public class DeleteSevlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (!employeeJPAService.deleteEmployee(req.getParameter("id"))) {
+        if (!employeeService.deleteEmployee(req.getParameter("id"))) {
 
             req.setAttribute("error", "Update employee fail !!!");
             req.getServletContext()
