@@ -1,11 +1,30 @@
 package com.aptech.wcd01.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Employee {
+
+@Entity
+@Table(name = "Employee")
+public class Employee implements Serializable {
+    @Id
+    @Column(name = "Id")
     private  String id;
+
+    @Column(name = "Emp_Name", columnDefinition = "nvarchar(100)")
     private String name;
+
+    @Column(name = "Adress",columnDefinition = "nvarchar(100)")
+
     private  String address;
+    @Column(name = "Age")
+    @Min(value = 16, message = "Age must greater than 15")
     private int age;
     public String getId() {
         return id;

@@ -6,7 +6,7 @@
   Time: 6:34 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Insert employee</title>
@@ -27,6 +27,7 @@
         <input name="age" type="number" placeholder="Age">
     </p>
     <p>
+        <input type="reset" value="Reset">
         <input type="submit" value="Submit">
     </p>
 </form>

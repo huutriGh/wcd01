@@ -2,6 +2,9 @@ package com.aptech.wcd01;
 
 import com.aptech.wcd01.models.Employee;
 import com.aptech.wcd01.models.EmployeeList;
+import com.aptech.wcd01.services.EmployeeJPAService;
+import com.aptech.wcd01.services.EmployeeJPAServiceImpl;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,6 +16,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/insert")
 public class InsertServlet extends HttpServlet {
 
+    @Inject
+    EmployeeJPAService employeeJPAService ;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getServletContext()
@@ -23,7 +28,8 @@ public class InsertServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            EmployeeList employeeList = new EmployeeList();
+           // EmployeeList employeeList = new EmployeeList();
+
             Employee employee = new Employee();
             employee.setId(req.getParameter("id"));
             employee.setName(req.getParameter("name"));
@@ -31,15 +37,15 @@ public class InsertServlet extends HttpServlet {
             employee.setAge(Integer.valueOf(req.getParameter("age")));
 
 
-            if (!employeeList.insertEmp(employee)) {
+
+            if (!employeeJPAService.addEmployee(employee)) {
 
                 req.setAttribute("error", "Employee is exist");
                 req.getServletContext()
                         .getRequestDispatcher("/WEB-INF/failed.jsp").forward(req, resp);
             } else {
 
-                req.setAttribute("employeeList",employeeList.getEmployeeList());
-                req.getServletContext().setAttribute("employeeList", employeeList.getEmployeeList() );
+                req.setAttribute("employeeList",employeeJPAService.getAllEmployee());
                 req.getServletContext()
                         .getRequestDispatcher("/WEB-INF/success.jsp").forward(req, resp);
             }
