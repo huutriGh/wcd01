@@ -15,7 +15,11 @@
     </style>
 </head>
 <body>
-<h3>Insert employee success</h3>
+<h3>Employee List</h3>
+<p>
+    <a href="<c:url value="insert"/>">Create Employee</a>
+</p>
+
 <table class="table">
     <thead>
     <tr>

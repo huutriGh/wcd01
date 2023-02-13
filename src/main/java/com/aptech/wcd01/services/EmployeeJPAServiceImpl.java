@@ -11,9 +11,7 @@ import javax.naming.NamingException;
 import java.util.List;
 
 
-
 public class EmployeeJPAServiceImpl implements EmployeeJPAService {
-
 
 
     private EntityManager entityManager;
@@ -75,6 +73,19 @@ public class EmployeeJPAServiceImpl implements EmployeeJPAService {
 
     @Override
     public boolean deleteEmployee(String id) {
-        return false;
+
+        try {
+            entityManager.getTransaction().begin();
+            Employee employee = entityManager.find(Employee.class, id);
+            entityManager.remove(employee);
+            entityManager.getTransaction().commit();
+
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            return false;
+        }
     }
 }

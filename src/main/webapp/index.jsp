@@ -10,6 +10,6 @@
 <h1><%= "Insert Employee" %>
 </h1>
 <br/>
-<a href="<c:url value="insert"/> ">Hello Servlet</a>
+<a href="<c:url value="list"/> ">Go to employee list</a>
 </body>
 </html>
