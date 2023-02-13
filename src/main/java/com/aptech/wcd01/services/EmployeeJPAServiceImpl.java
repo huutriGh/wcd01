@@ -11,22 +11,18 @@ import javax.naming.NamingException;
 import java.util.List;
 
 
-@ApplicationScoped
+
 public class EmployeeJPAServiceImpl implements EmployeeJPAService {
 
 
-    @PersistenceContext(unitName = "default")
+
     private EntityManager entityManager;
-    UserTransaction userTransaction;
+
 
     public EmployeeJPAServiceImpl() {
-//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-//        entityManager = entityManagerFactory.createEntityManager();
-        try {
-            userTransaction = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
-        }
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        entityManager = entityManagerFactory.createEntityManager();
+
 
     }
 
@@ -46,11 +42,9 @@ public class EmployeeJPAServiceImpl implements EmployeeJPAService {
 
         try {
 
-
-            userTransaction.begin();
-            entityManager.joinTransaction();
+            entityManager.getTransaction().begin();
             entityManager.persist(employee);
-            userTransaction.commit();
+            entityManager.getTransaction().commit();
 
 
             return true;
@@ -66,10 +60,9 @@ public class EmployeeJPAServiceImpl implements EmployeeJPAService {
     public boolean updateEmployee(Employee employee) {
 
         try {
-            userTransaction.begin();
-            entityManager.joinTransaction();
+            entityManager.getTransaction().begin();
             entityManager.merge(employee);
-            userTransaction.commit();
+            entityManager.getTransaction().commit();
 
 
             return true;

@@ -23,8 +23,8 @@
         <th>Name</th>
         <th>Address</th>
         <th>Age</th>
-        <th></th>
-        <th></th>
+        <th colspan="2">Action</th>
+
     </tr>
     </thead>
     <tbody>
@@ -35,7 +35,8 @@
             <td>${emp.address}</td>
             <td>${emp.age}</td>
             <td><a href="<c:url value="/update?id=${emp.id}"/>">Update</a></td>
-            <td><a href="<c:url value="#"/>">Delete</a></td>
+            <td><a href="<c:url value="/delete?id=${emp.id}"/>">Delete</a></td>
+
         </tr>
     </c:forEach>
     </tbody>

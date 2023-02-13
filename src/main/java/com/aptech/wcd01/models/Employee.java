@@ -20,7 +20,7 @@ public class Employee implements Serializable {
     @Column(name = "Emp_Name", columnDefinition = "nvarchar(100)")
     private String name;
 
-    @Column(name = "Adress",columnDefinition = "nvarchar(100)")
+    @Column(name = "Address",columnDefinition = "nvarchar(100)")
 
     private  String address;
     @Column(name = "Age")
