@@ -9,12 +9,12 @@
 <body>
 <h1> Login Page </h1>
 <br/>
-<form method="post" action="j_security_check">
+<form method="post" action="login">
     <p>
-        <input type="text" placeholder="User Name" name="j_username">
+        <input type="text" placeholder="User Name" name="username">
     </p>
     <p>
-        <input type="password" placeholder="Password" name="j_password">
+        <input type="password" placeholder="Password" name="password">
     </p>
     <p>
         <input type="submit" value="login">
