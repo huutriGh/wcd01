@@ -9,8 +9,19 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
+@WebServlet(urlPatterns = { "/login", "/logout" })
 public class LoginServlet extends HttpServlet {
+
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var session =  req.getSession(false);
+        if(session != null){
+            session.invalidate();
+            req.getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userName = req.getParameter("username");
@@ -20,6 +31,7 @@ public class LoginServlet extends HttpServlet {
 
         if (userName.equals("user") && password.equals("password")) {
             var session = req.getSession(true);
+
             session.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/list");
         } else {

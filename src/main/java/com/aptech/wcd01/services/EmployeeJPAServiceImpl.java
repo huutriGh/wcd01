@@ -27,7 +27,7 @@ public class EmployeeJPAServiceImpl implements EmployeeJPAService {
     @Override
     public List<Employee> getAllEmployee() {
 
-        return entityManager.createQuery("select e from Employee e", Employee.class).getResultList();
+        return entityManager.createQuery("select e from Employee e ", Employee.class).getResultList();
     }
 
     @Override
@@ -87,5 +87,12 @@ public class EmployeeJPAServiceImpl implements EmployeeJPAService {
 
             return false;
         }
+    }
+
+    @Override
+    public List<Employee> searchEmployeeByName(String searchStr) {
+        var query =  entityManager.createQuery("select e from Employee e where  e.name like :keyword", Employee.class);
+        query.setParameter("keyword","%" + searchStr + "%");
+        return query.getResultList();
     }
 }

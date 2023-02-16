@@ -15,4 +15,6 @@ public interface EmployeeJPAService {
 
     public boolean deleteEmployee(String id);
 
+    public  List<Employee> searchEmployeeByName(String searchStr);
+
 }

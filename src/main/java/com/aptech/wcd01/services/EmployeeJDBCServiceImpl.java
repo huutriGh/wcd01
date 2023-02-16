@@ -116,4 +116,25 @@ public class EmployeeJDBCServiceImpl implements  EmployeeJDBCService {
         }
         return null;
     }
+
+    @Override
+    public List<Employee> searchEmployeeByName(String searchStr) {
+        String query = "Select * from employee where emp_name like ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, "%" + searchStr + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Employee> employeeList = new ArrayList<>();
+            while (resultSet.next()) {
+                Employee employee = new Employee();
+                employee.setId(resultSet.getString("id"));
+                employee.setName(resultSet.getString("Emp_Name"));
+                employee.setAddress(resultSet.getString("Address"));
+                employee.setAge(resultSet.getInt("Age"));
+                employeeList.add(employee);
+            }
+            return employeeList;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
 }

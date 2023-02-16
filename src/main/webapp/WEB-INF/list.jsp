@@ -15,10 +15,27 @@
     </style>
 </head>
 <body>
+<h1>
+    <c:if test="${!empty sessionScope.user}">
+        Hello ${sessionScope.user.userName} <a href="<c:url value="/logout"/>">Logout</a>
+    </c:if>
+</h1>
 <h3>Employee List</h3>
 <p>
     <a href="<c:url value="insert"/>">Create Employee</a>
 </p>
+<div>
+    <form action="<c:url value="/search"/> " method="post">
+        <p>
+            <input type="text" placeholder="Search by name" value="${lastSearchStr}" name="searchString"/>
+        </p>
+        <p>
+            <input type="submit" value="search"/>
+        </p>
+
+    </form>
+
+</div>
 
 <table class="table">
     <thead>
