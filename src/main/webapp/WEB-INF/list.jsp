@@ -15,11 +15,24 @@
     </style>
 </head>
 <body>
+<h2>Hello ${sessionScope.user.userName} <a href="<c:url value="/logout"/>">Logout</a></h2>
 <h3>Employee List</h3>
+
 <p>
     <a href="<c:url value="insert"/>">Create Employee</a>
 </p>
 
+<div>
+    <form method="post" action="search">
+        <p>
+            <input name="searchStr" type="text">
+        </p>
+        <p>
+            <input type="submit" value="Search">
+        </p>
+
+    </form>
+</div>
 <table class="table">
     <thead>
     <tr>

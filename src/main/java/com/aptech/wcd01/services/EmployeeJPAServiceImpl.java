@@ -88,4 +88,14 @@ public class EmployeeJPAServiceImpl implements EmployeeJPAService {
             return false;
         }
     }
+
+    @Override
+    public List<Employee> searchEmployee(String searchStr) {
+
+        var query = entityManager.createQuery("select e from Employee e where e.name like ?1 or e.address like ?2 ", Employee.class);
+        query.setParameter(1, "%" + searchStr + "%");
+        query.setParameter(2, "%" + searchStr + "%");
+        return query.getResultList();
+
+    }
 }

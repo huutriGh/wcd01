@@ -10,4 +10,5 @@ public interface EmployeeJDBCService {
     public boolean deleteEmployee(String id);
     public List<Employee> getAllEmployee();
     public Employee getEmployeeById(String id);
+    public List<Employee> searchEmployee(String searchStr);
 }

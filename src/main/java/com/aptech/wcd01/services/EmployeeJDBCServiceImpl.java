@@ -1,12 +1,13 @@
 package com.aptech.wcd01.services;
 
 import com.aptech.wcd01.models.Employee;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class EmployeeJDBCServiceImpl implements  EmployeeJDBCService {
+public class EmployeeJDBCServiceImpl implements EmployeeJDBCService {
     String url = "jdbc:sqlserver://localhost:1433;databaseName=employee;encrypt=true;trustServerCertificate=true;";
     Connection connection;
 
@@ -115,5 +116,29 @@ public class EmployeeJDBCServiceImpl implements  EmployeeJDBCService {
 
         }
         return null;
+    }
+
+    @Override
+    public List<Employee> searchEmployee(String searchStr) {
+        String query = "Select * from employee where Emp_Name like ? or Address like ? ";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, "%" + searchStr + "%");
+            preparedStatement.setString(2, "%" + searchStr + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Employee> employeeList = new ArrayList<>();
+            while (resultSet.next()) {
+                Employee employee = new Employee();
+                employee.setId(resultSet.getString("id"));
+                employee.setName(resultSet.getString("Emp_Name"));
+                employee.setAddress(resultSet.getString("Address"));
+                employee.setAge(resultSet.getInt("Age"));
+                employeeList.add(employee);
+            }
+            return employeeList;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

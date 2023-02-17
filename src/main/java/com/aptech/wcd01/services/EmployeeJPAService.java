@@ -14,5 +14,7 @@ public interface EmployeeJPAService {
     public boolean updateEmployee(Employee employee);
 
     public boolean deleteEmployee(String id);
+    public List<Employee> searchEmployee(String searchStr);
+
 
 }
