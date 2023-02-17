@@ -24,8 +24,12 @@
 
 <div>
     <form method="post" action="search">
+<%--        <p>--%>
+<%--            <input name="searchStr" type="text" value="${lastSearchStr}">--%>
+<%--        </p>--%>
+
         <p>
-            <input name="searchStr" type="text">
+            <input name="searchStr" type="text" value="${cookie.get("lastSearchStr").value}">
         </p>
         <p>
             <input type="submit" value="Search">

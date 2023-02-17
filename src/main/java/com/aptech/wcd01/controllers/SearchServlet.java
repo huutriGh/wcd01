@@ -6,6 +6,7 @@ import com.aptech.wcd01.services.EmployeeJPAService;
 import com.aptech.wcd01.services.EmployeeJPAServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +22,12 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute("employeeList", employeeJDBCService.searchEmployee(req.getParameter("searchStr")));
+        String search = req.getParameter("searchStr");
+        var cookie = new Cookie("lastSearchStr",search );
+        cookie.setHttpOnly(true);
+        resp.addCookie(cookie);
+        req.setAttribute("employeeList", employeeJDBCService.searchEmployee(search));
+
         req.getServletContext().getRequestDispatcher("/WEB-INF/list.jsp").forward(req, resp);
     }
 }
