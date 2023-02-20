@@ -1,10 +1,9 @@
 package com.aptech.wcd01.controllers;
 
 import com.aptech.wcd01.models.Employee;
-import com.aptech.wcd01.models.EmployeeList;
 import com.aptech.wcd01.services.EmployeeJPAService;
 import com.aptech.wcd01.services.EmployeeJPAServiceImpl;
-import jakarta.inject.Inject;
+import com.aptech.wcd01.validation.BeanValidation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +20,7 @@ public class InsertServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getServletContext()
                 .getRequestDispatcher("/WEB-INF/insert.jsp")
-                .forward(req,resp);
+                .forward(req, resp);
     }
 
     @Override
@@ -34,16 +33,25 @@ public class InsertServlet extends HttpServlet {
             employee.setName(req.getParameter("name"));
             employee.setAddress(req.getParameter("address"));
             employee.setAge(Integer.valueOf(req.getParameter("age")));
+            BeanValidation<Employee> employeeBeanValidation = new BeanValidation<>();
+            String error = employeeBeanValidation.validEmployee(employee);
+            if (!error.isEmpty()) {
 
-            if (!employeeJPAService.addEmployee(employee)) {
+                req.setAttribute("error", error);
+                req.getServletContext().getRequestDispatcher("/WEB-INF/insert.jsp").include(req, resp);
 
-                req.setAttribute("error", "Employee is exist");
-                req.getServletContext()
-                        .getRequestDispatcher("/WEB-INF/failed.jsp").forward(req, resp);
             } else {
 
-               resp.sendRedirect( req.getContextPath() + "/list");
+                if (!employeeJPAService.addEmployee(employee)) {
 
+                    req.setAttribute("error", "Employee is exist");
+                    req.getServletContext()
+                            .getRequestDispatcher("/WEB-INF/failed.jsp").forward(req, resp);
+                } else {
+
+                    resp.sendRedirect(req.getContextPath() + "/list");
+
+                }
             }
 
         } catch (Exception ex) {

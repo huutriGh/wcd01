@@ -14,22 +14,25 @@
 </head>
 <body>
 <h2>Update Employee</h2>
-<form action="<c:url value="/update"/>" method="post" >
-  <p>
-    <input name="id" type="hidden"  value="${emp.id}" placeholder="Employee Id">
-  </p>
-  <p>
-    <input name="name" type="text" value="${emp.name}" placeholder="Employee Name">
-  </p>
-  <p>
-    <input name="address" type="text" value="${emp.address}" placeholder="Address">
-  </p>
-  <p>
-    <input name="age" type="number" value="${emp.age}" placeholder="Age">
-  </p>
-  <p>
-    <input type="submit" value="Submit">
-  </p>
+<form action="<c:url value="/update"/>" method="post">
+    <p>
+        ${error}
+    </p>
+    <p>
+        <input name="id" type="hidden" value="${emp.id}" placeholder="Employee Id">
+    </p>
+    <p>
+        <input name="name" type="text" value="${emp.name}" placeholder="Employee Name">
+    </p>
+    <p>
+        <input name="address" type="text" value="${emp.address}" placeholder="Address">
+    </p>
+    <p>
+        <input name="age" type="number" value="${emp.age}" placeholder="Age">
+    </p>
+    <p>
+        <input type="submit" value="Submit">
+    </p>
 </form>
 </body>
 </html>

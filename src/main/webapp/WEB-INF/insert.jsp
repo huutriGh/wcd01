@@ -15,6 +15,9 @@
 <h3>Insert Employee</h3>
 <form action="<c:url value="/insert"/> " method="post" >
     <p>
+        ${error}
+    </p>
+    <p>
         <input name="id" type="text" placeholder="Employee Id">
     </p>
     <p>
